@@ -1,7 +1,9 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
-import React, { useState } from "react";
-import { Button, FlatList, Image, ImageStyle, ScrollView, StatusBar, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, FlatList, Image, ImageStyle, Keyboard, ScrollView, StatusBar, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import StorageComponent from "./src/StorageComponent";
 
 interface PersonProps{
   name: string;
@@ -51,6 +53,35 @@ export default function App(){
   const [randomPhrase, setRandomPhrase] = useState<string>(phrases[0]);
   const [slideValue, setSlideValue] = useState<number>(0);
   const [hideSlide, setHideSlide] = useState<boolean>(false);
+  const [textStorage, setTextStorage] = useState<string>('');
+  const [name, setName] = useState<string>('');
+
+  useEffect(() => {
+    loadStorage();
+  }, [])
+
+  async function loadStorage(){
+    try{
+      await AsyncStorage.getItem('name').then(value => {
+        if(value !== null){
+          setName(value);
+        }
+      })
+    } catch (e){
+      throw new Error('Erro ao carregar o nome: '+e);
+    }
+  }
+
+  async function setStorage(){
+    setName(textStorage);
+    Keyboard.dismiss();
+    alert('Nome salvo com sucesso!');
+    try{
+      await AsyncStorage.setItem('name', name);
+    } catch(e: any){
+      throw new Error('Erro ao salvar o nome: '+e);
+    }
+  }
 
   return(
     <>
@@ -126,7 +157,18 @@ export default function App(){
 
             <Switch value={hideSlide} onValueChange={(value) => setHideSlide(value)} thumbColor='#010FFF' />
           </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Async Storage</Text>
+
+            <Text style={styles.sectionTitle}>Importando classe</Text>
+            <StorageComponent />
+          </View>
         </ScrollView>
+      </View>
+
+      <View>
+        
       </View>
     </>
   )
@@ -184,5 +226,15 @@ const styles = StyleSheet.create({
   box: {
     height: 200,
     width: '100%',
+  },
+  btnAdd: {
+    backgroundColor: '#000',
+    color: '#FFF',
+    fontSize: 20,
+    flex: 1,
+    textAlign: 'center',
+    padding: 5,
+    marginHorizontal: 10,
+    marginTop: 10,
   }
 })
