@@ -1,8 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
-import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, ImageStyle, Keyboard, ScrollView, StatusBar, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Button, FlatList, Image, ImageStyle, ScrollView, StatusBar, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import ModalComponent from "./src/ModalComponent";
 import StorageComponent from "./src/StorageComponent";
 
 interface PersonProps{
@@ -53,34 +53,10 @@ export default function App(){
   const [randomPhrase, setRandomPhrase] = useState<string>(phrases[0]);
   const [slideValue, setSlideValue] = useState<number>(0);
   const [hideSlide, setHideSlide] = useState<boolean>(false);
-  const [textStorage, setTextStorage] = useState<string>('');
-  const [name, setName] = useState<string>('');
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
-  useEffect(() => {
-    loadStorage();
-  }, [])
-
-  async function loadStorage(){
-    try{
-      await AsyncStorage.getItem('name').then(value => {
-        if(value !== null){
-          setName(value);
-        }
-      })
-    } catch (e){
-      throw new Error('Erro ao carregar o nome: '+e);
-    }
-  }
-
-  async function setStorage(){
-    setName(textStorage);
-    Keyboard.dismiss();
-    alert('Nome salvo com sucesso!');
-    try{
-      await AsyncStorage.setItem('name', name);
-    } catch(e: any){
-      throw new Error('Erro ao salvar o nome: '+e);
-    }
+  function closeModal(){
+    setOpenModal(false);
   }
 
   return(
@@ -168,7 +144,8 @@ export default function App(){
       </View>
 
       <View>
-        
+        <Button title="Abrir modal" onPress={() => setOpenModal(true)} />
+        <ModalComponent openModal={openModal} closeModal={closeModal} />
       </View>
     </>
   )
