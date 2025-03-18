@@ -7,7 +7,7 @@ interface StateProps{
   name?: string;
 }
 
-export default class StorageComponent extends Component<{}, StateProps>{
+export default class StorageAsClass extends Component<{}, StateProps>{
   constructor(props: any){
     super(props);
     this.state = {

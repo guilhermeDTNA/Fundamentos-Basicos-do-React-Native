@@ -3,7 +3,7 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Button, FlatList, Image, ImageStyle, ScrollView, StatusBar, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
 import ModalComponent from "./src/ModalComponent";
-import StorageComponent from "./src/StorageComponent";
+import StorageAsClass from "./src/StorageComponent/StorageAsClass";
 
 interface PersonProps{
   name: string;
@@ -138,7 +138,8 @@ export default function App(){
             <Text style={styles.sectionTitle}>Async Storage</Text>
 
             <Text style={styles.sectionTitle}>Importando classe</Text>
-            <StorageComponent />
+            <StorageAsClass />
+            {/* <StorageAsFunction /> */}
           </View>
         </ScrollView>
       </View>
