@@ -1,11 +1,32 @@
-import React, { useState } from "react";
-import { Button, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Button, FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import BasicElements from "./src/components/BasicElements";
 import ModalComponent from "./src/components/ModalComponent";
+import { Movie } from "./src/components/Movies";
 import StorageAsClass from "./src/components/StorageComponent/StorageAsClass";
+import api from "./src/services/api";
+
+export interface MovieProps{
+  foto: string,
+  id: number,
+  nome: string,
+  sinopse: string
+}
 
 export default function App(){  
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [movies, setMovies] = useState<MovieProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  async function loadMovies(){
+    const response = await api.get('r-api/?api=filmes');
+    setMovies(response.data);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    loadMovies();
+  }, [])
 
   function closeModal(){
     setOpenModal(false);
@@ -26,12 +47,26 @@ export default function App(){
             {/* <StorageAsFunction /> */}
           </View>
         </ScrollView>
+
+        <View>
+          <Button title="Abrir modal" onPress={() => setOpenModal(true)} />
+          <ModalComponent openModal={openModal} closeModal={closeModal} />
+        </View>
       </View>
 
-      <View>
-        <Button title="Abrir modal" onPress={() => setOpenModal(true)} />
-        <ModalComponent openModal={openModal} closeModal={closeModal} />
-      </View>
+      {loading ? 
+        (<View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <ActivityIndicator color="#121212" size={45} />
+        </View>) : 
+        (<View>
+          <FlatList
+            data={movies}
+            renderItem={({item}) => <Movie movie={item} />}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </View>)
+      }
+      
     </>
   )
 }
