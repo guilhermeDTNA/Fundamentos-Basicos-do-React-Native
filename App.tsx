@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Button, FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import Animations from "./src/components/Animations";
 import BasicElements from "./src/components/BasicElements";
 import ModalComponent from "./src/components/ModalComponent";
 import { Movie } from "./src/components/Movies";
@@ -37,6 +38,12 @@ export default function App(){
       <StatusBar barStyle="light-content" backgroundColor="#3e91e4" />
       <View style={globalStyles.container}>
         <ScrollView showsVerticalScrollIndicator>
+          <View style={globalStyles.section}>
+            <Text style={globalStyles.sectionTitle}>Animações</Text>
+
+            <Animations />
+          </View>
+
           <BasicElements />
 
           <View style={globalStyles.section}>
