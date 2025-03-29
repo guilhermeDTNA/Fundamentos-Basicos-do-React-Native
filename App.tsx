@@ -1,10 +1,9 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Button, FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
-import Animations from "./src/components/Animations";
-import BasicElements from "./src/components/BasicElements";
-import ModalComponent from "./src/components/ModalComponent";
-import { Movie } from "./src/components/Movies";
-import StorageAsClass from "./src/components/StorageComponent/StorageAsClass";
+import { StatusBar, StyleSheet } from "react-native";
+import Home from "./src/pages/Home";
+import Sobre, { Contato } from "./src/pages/Sobre";
 import api from "./src/services/api";
 
 export interface MovieProps{
@@ -33,8 +32,23 @@ export default function App(){
     setOpenModal(false);
   }
 
+  const Stack = createStackNavigator();
+
   return(
-    <>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={{
+          title: 'Tela inicial',
+          headerStyle: {
+            backgroundColor: '#121212'
+          },
+          headerTintColor: '#FFF',
+          headerShown: false
+        }} />
+        <Stack.Screen name="Sobre" component={Sobre} />
+        <Stack.Screen name="Contato" component={Contato} />
+      </Stack.Navigator>
+    {/*
       <StatusBar barStyle="light-content" backgroundColor="#3e91e4" />
       <View style={globalStyles.container}>
         <ScrollView showsVerticalScrollIndicator>
@@ -51,7 +65,7 @@ export default function App(){
 
             <Text style={globalStyles.sectionTitle}>Importando classe</Text>
             <StorageAsClass />
-            {/* <StorageAsFunction /> */}
+            { <StorageAsFunction /> }
           </View>
         </ScrollView>
 
@@ -73,8 +87,8 @@ export default function App(){
           />
         </View>)
       }
-      
-    </>
+      */}
+    </NavigationContainer>
   )
 }
 
