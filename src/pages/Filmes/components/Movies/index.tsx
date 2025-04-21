@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { MovieProps } from "../../../App";
+import { MovieProps } from "../../types/Filmes";
 import { Details } from "./Details";
 
 export interface MovieCard{
