@@ -5,7 +5,6 @@ import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler
 import { globalStyles } from "../../common/styles/global";
 import Animations from "./components/Animations";
 import ModalComponent from "./components/ModalComponent";
-import StorageAsClass from "./components/StorageComponent/StorageAsClass";
 import StorageAsFunction from "./components/StorageComponent/StorageAsFunction";
 
 const Intermediario = () => {
@@ -38,8 +37,7 @@ const Intermediario = () => {
             <Text style={globalStyles.sectionTitle}>Async Storage</Text>
 
             <Text style={globalStyles.sectionTitle}>Importando classe</Text>
-            <StorageAsClass />
-            { <StorageAsFunction /> }
+            <StorageAsFunction />
           </View>
         </ScrollView>
 

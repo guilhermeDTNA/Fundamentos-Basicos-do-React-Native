@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Icon from '@react-native-vector-icons/fontawesome';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Intermediario from "../pages/Intermediario";
@@ -24,18 +24,18 @@ export default function Routes(){
       <Tab.Screen name="Básico" component={StackRoutes}
         options={{
           tabBarLabel: "Elementos básicos",
-          tabBarIcon: ({color, size}) => <Ionicons name="home" size={size} color={color} />
+          tabBarIcon: ({color, size}) => <Icon name='home' color={color} size={size} />
         }}
       />
       <Tab.Screen name="Intermediário" component={Intermediario}
         options={{
-          tabBarIcon: ({color, size}) => <Ionicons name="phone-landscape" size={size} color={color} />,
+          tabBarIcon: ({color, size}) => <Icon name='level-up' color={color} size={size} />,
         }}
       />
 
       <Tab.Screen name="Sobre" component={NavigationOptions}
         options={{
-          tabBarIcon: ({color, size}) => <Ionicons name="phone-landscape" size={size} color={color} />
+          tabBarIcon: ({color, size}) => <Icon name='info-circle' color={color} size={size}/>
         }}
       />
     </Tab.Navigator>

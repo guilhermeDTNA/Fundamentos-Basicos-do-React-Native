@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MovieProps } from "../../types/Filmes";
 import { Details } from "./Details";
@@ -9,6 +9,21 @@ export interface MovieCard{
 
 export const Movie = ({ movie }: MovieCard) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [imageHeight, setImageHeight] = useState<number>(250);
+
+  useEffect(() => {
+    Image.getSize(
+      movie.foto,
+      (width, height) => {
+        const ratio = height / width;
+        setImageHeight(250 * ratio); // 250 é o width fixo
+      },
+      (error) => {
+        console.error('Erro ao obter a imagem:', error);
+        setImageHeight(250); // fallback
+      }
+    );
+  }, [movie.foto]);
 
   return(
     <View>
@@ -17,6 +32,7 @@ export const Movie = ({ movie }: MovieCard) => {
 
         <Image
           source={{uri: movie.foto}}
+          style={[styles.capa, { height: imageHeight }]}
         />
 
         <View style={styles.areaBtn}>
@@ -40,7 +56,6 @@ const styles = StyleSheet.create({
     elevation: 2
   },
   capa:{
-    height: 250,
     width: 250,
     zIndex: 2
   },

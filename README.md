@@ -1,7 +1,9 @@
 Instalação e execução:
 
-Fazer o download do app do Expo!
+Obs.: instalar e configurar o android studio, bem como um emulador. <br />
+Versão do JDK recomendado: <b>java-1.17.0-openjdk-amd64</b>.
 
 ```console
 $ npm install
-$ npx expo start
+$ npx react-native start
+$ npx react-native run-android

@@ -7,16 +7,8 @@ export default function StorageAsFunction(){
   const [input, setInput] = useState<string>('');
 
   useEffect(() => {
-    async function saveStorage(){
-      await AsyncStorage.setItem('names', name);
-    }
-
-    saveStorage();
-  }, [name]);
-
-  useEffect(() => {
     async function getStorage(){
-      const nameStorage = await AsyncStorage.getItem('names');
+      const nameStorage = await AsyncStorage.getItem('name');
       if(nameStorage !== null){
         setName(nameStorage);
       }
@@ -27,6 +19,7 @@ export default function StorageAsFunction(){
 
   function changeName(){
     setName(input);
+    AsyncStorage.setItem('name', input);
     setInput('');
   }
 

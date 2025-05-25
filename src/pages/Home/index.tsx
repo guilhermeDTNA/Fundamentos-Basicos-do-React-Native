@@ -2,7 +2,7 @@ import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Button, Image, ImageStyle, ScrollView, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Button, Image, ImageStyle, ScrollView, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../common/styles/global";
 
 
@@ -33,7 +33,7 @@ const BasicElements = () => {
 
   const LogoImg = (styles: StyleProp<ImageStyle>) => {
     return (
-      <TouchableOpacity onPress={() => alert('Clicou na imagem')}>
+      <TouchableOpacity onPress={() => Alert.alert('Clicou na imagem')}>
         <Image
           source={require('../../../assets/icon.png')}
           style={styles}
@@ -113,7 +113,7 @@ const BasicElements = () => {
           Manipulação de Listas
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Listas')} style={styles.btnAdd}>
-          <Text>Saber mais</Text>
+          <Text style={{color: '#FFF', textAlign: "center", fontWeight: 'bold'}}>Saber mais</Text>
         </TouchableOpacity>
       </View>
 
@@ -123,7 +123,7 @@ const BasicElements = () => {
         </Text>
 
         <TouchableOpacity onPress={goToMovies} style={styles.btnAdd}>
-          <Text>Saber mais</Text>
+          <Text style={{color: '#FFF', textAlign: "center", fontWeight: 'bold'}}>Saber mais</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
