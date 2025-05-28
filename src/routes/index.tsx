@@ -1,43 +1,15 @@
-import Icon from '@react-native-vector-icons/fontawesome';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from '@react-navigation/stack';
 import React from "react";
-import Intermediario from "../pages/Intermediario";
-import NavigationOptions from "../pages/Navegacao";
-import StackRoutes from "./stackRoutes";
+import { StackRoutesList } from './stackRoutes';
+import TabRoutes from './tabRoutes';
 
-export default function Routes(){  
-  const Tab = createBottomTabNavigator();
+export default function Routes(){
+  const Stack = createStackNavigator();
 
-  return(
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarHideOnKeyboard: true,
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: '#FFF',
-        tabBarStyle: {
-          backgroundColor: '#202225',
-          borderTopWidth: 0
-        }
-      }}
-    >
-      <Tab.Screen name="Básico" component={StackRoutes}
-        options={{
-          tabBarLabel: "Elementos básicos",
-          tabBarIcon: ({color, size}) => <Icon name='home' color={color} size={size} />
-        }}
-      />
-      <Tab.Screen name="Intermediário" component={Intermediario}
-        options={{
-          tabBarIcon: ({color, size}) => <Icon name='level-up' color={color} size={size} />,
-        }}
-      />
-
-      <Tab.Screen name="Sobre" component={NavigationOptions}
-        options={{
-          tabBarIcon: ({color, size}) => <Icon name='info-circle' color={color} size={size}/>
-        }}
-      />
-    </Tab.Navigator>
-  )
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Tabs" component={TabRoutes} options={{ headerShown: false }} />
+      {StackRoutesList}
+    </Stack.Navigator>
+  );
 }
