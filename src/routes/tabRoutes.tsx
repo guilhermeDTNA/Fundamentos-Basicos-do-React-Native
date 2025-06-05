@@ -2,6 +2,7 @@ import Icon from '@react-native-vector-icons/fontawesome';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Intermediario from "../pages/Intermediario";
+import Notificacoes from '../pages/Notificacoes';
 import StackRoutes from "./stackRoutes";
 
 export default function TabRoutes() {
@@ -29,6 +30,11 @@ export default function TabRoutes() {
       <Tab.Screen name="Intermediário" component={Intermediario}
         options={{
           tabBarIcon: ({color, size}) => <Icon name='level-up' color={color} size={size} />,
+        }}
+      />
+      <Tab.Screen name="Notificações" component={Notificacoes}
+        options={{
+          tabBarIcon: ({color, size}) => <Icon name='bell' color={color} size={size} />
         }}
       />
     </Tab.Navigator>
