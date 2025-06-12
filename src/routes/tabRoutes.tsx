@@ -1,6 +1,7 @@
 import Icon from '@react-native-vector-icons/fontawesome';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import Camera from '../pages/Camera';
 import Intermediario from "../pages/Intermediario";
 import Notificacoes from '../pages/Notificacoes';
 import StackRoutes from "./stackRoutes";
@@ -35,6 +36,11 @@ export default function TabRoutes() {
       <Tab.Screen name="Notificações" component={Notificacoes}
         options={{
           tabBarIcon: ({color, size}) => <Icon name='bell' color={color} size={size} />
+        }}
+      />
+      <Tab.Screen name="Câmera" component={Camera}
+        options={{
+          tabBarIcon: ({color, size}) => <Icon name='camera' color={color} size={size} />
         }}
       />
     </Tab.Navigator>
