@@ -1,18 +1,15 @@
 import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Alert, Button, Image, ImageStyle, ScrollView, StyleProp, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../common/styles/global";
-
-
+import { UserProps } from "../../common/types/user.ts";
+import { AuthContext } from "../../contexts/auth.tsx";
 
 const BasicElements = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>('java');
   const navigation = useNavigation<NavigationProp<any>>();
-
-  
-
   const [text, setText] = useState<string>('');
   const phrases = [
     'Frase 1',
@@ -23,10 +20,11 @@ const BasicElements = () => {
   const [randomPhrase, setRandomPhrase] = useState<string>(phrases[0]);
   const [slideValue, setSlideValue] = useState<number>(0);
   const [hideSlide, setHideSlide] = useState<boolean>(false);
+  const { user } = useContext(AuthContext) as UserProps;
 
   function goToMovies(){
     navigation.navigate('APIs', {
-      name: 'Guilherme Rocha',
+      name: user.name,
       email: 'teste@teste.com'
     });
   }
@@ -45,6 +43,7 @@ const BasicElements = () => {
   return(
     <ScrollView>
       <View style={globalStyles.section}>
+        <Text>Olá, {user.name}! </Text>
         <Text style={globalStyles.sectionTitle}>Elementos básicos do React Native</Text>
         <Text style={{ color: '#FF0000', margin: 15 }}>{text !== '' ? text : 'Hello World'}</Text>
 
