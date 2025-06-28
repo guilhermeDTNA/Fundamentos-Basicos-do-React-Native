@@ -19,3 +19,21 @@ MYAPP_UPLOAD_KEY_ALIAS=KEY_ALIAS
 MYAPP_UPLOAD_STORE_PASSWORD=STORE_PASSWORD
 MYAPP_UPLOAD_KEY_PASSWORD=KEY_PASSWORD
 ```
+
+Gerando nova release:
+
+Altere a versão através da propriedade <strong>versionName</strong> no arquivo: ```/android/app/build.gradle```
+
+após isso, execute o comando:
+
+```console
+$ cd /android
+$ ./gradlew assembleRelease
+```
+
+pode ser necessário rodar este comando, caso o comando acima dê problema:
+
+```console
+$ cd /android
+$ npx react-native build-android --mode=release
+```
