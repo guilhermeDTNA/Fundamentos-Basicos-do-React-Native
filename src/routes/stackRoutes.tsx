@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { IsAuthenticated } from "../common/utils/authentication";
+import { useContext } from "react";
+import { UserProps } from "../common/types/user";
+import { AuthContext } from "../contexts/auth";
 import { Filmes } from "../pages/Filmes";
 import BasicElements from "../pages/Home";
 import { Listas } from "../pages/Listas";
@@ -35,7 +37,7 @@ export const StackRoutesList = [
 ];
 
 export default function StackRoutes(){
-  const isAuthenticated = IsAuthenticated();
+  const { isAuthenticated } = useContext(AuthContext) as UserProps;
 
   return (
     <Stack.Navigator

@@ -1,7 +1,8 @@
 import Icon from '@react-native-vector-icons/fontawesome';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
-import { IsAuthenticated } from '../common/utils/authentication';
+import React, { useContext } from "react";
+import { UserProps } from '../common/types/user';
+import { AuthContext } from '../contexts/auth';
 import Camera from '../pages/Camera';
 import Intermediario from "../pages/Intermediario";
 import Notificacoes from '../pages/Notificacoes';
@@ -9,7 +10,7 @@ import StackRoutes from "./stackRoutes";
 
 export default function TabRoutes() {
   const Tab = createBottomTabNavigator();
-  const isAuthenticated = IsAuthenticated();
+  const { isAuthenticated } = useContext(AuthContext) as UserProps;
   const screenOptions = {
     headerShown: false,
     tabBarHideOnKeyboard: true,

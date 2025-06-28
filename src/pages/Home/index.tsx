@@ -25,7 +25,7 @@ const BasicElements = () => {
   function goToMovies(){
     navigation.navigate('APIs', {
       name: user.name,
-      email: 'teste@teste.com'
+      email: user.email
     });
   }
 
@@ -43,7 +43,12 @@ const BasicElements = () => {
   return(
     <ScrollView>
       <View style={globalStyles.section}>
-        <Text>Olá, {user.name}! </Text>
+        <Text>Olá, {user.name} {user.lastName}! </Text>
+        <Image source={{
+          uri: user.photo
+        }}
+        width={100}
+        height={100} />
         <Text style={globalStyles.sectionTitle}>Elementos básicos do React Native</Text>
         <Text style={{ color: '#FF0000', margin: 15 }}>{text !== '' ? text : 'Hello World'}</Text>
 

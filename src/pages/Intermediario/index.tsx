@@ -1,8 +1,10 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 import { globalStyles } from "../../common/styles/global";
+import { UserProps } from "../../common/types/user";
+import { AuthContext } from "../../contexts/auth";
 import Animations from "./components/Animations";
 import ModalComponent from "./components/ModalComponent";
 import StorageAsFunction from "./components/StorageComponent/StorageAsFunction";
@@ -10,6 +12,7 @@ import StorageAsFunction from "./components/StorageComponent/StorageAsFunction";
 const Intermediario = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const navigation = useNavigation<NavigationProp<any>>();
+  const { user } = useContext(AuthContext) as UserProps;
 
   function closeModal(){
     setOpenModal(false);
@@ -17,8 +20,8 @@ const Intermediario = () => {
 
   function goToAbout(){
     navigation.navigate('Sobre', {
-      name: 'Guilherme Rocha',
-      email: 'teste@teste.com'
+      name: user.name,
+      email: user.email
     });
   }
 
@@ -52,8 +55,8 @@ const Intermediario = () => {
         <TouchableOpacity onPress={goToAbout}>
           <Text>
             Passando os seguintes parâmetros para outra tela: {'\n'}
-            name: 'Guilherme Rocha',{'\n'}
-            email: 'teste@teste.com'{'\n'}
+            name: '{user.name}',{'\n'}
+            email: '{user.email}{'\n'}
           </Text>
         </TouchableOpacity>
       </View>

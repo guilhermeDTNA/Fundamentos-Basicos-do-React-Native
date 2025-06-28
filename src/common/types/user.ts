@@ -1,8 +1,13 @@
-interface UserData{
+export interface UserData{
   name: string;
+  email?: string;
+  photo?: string;
+  lastName?: string;
 }
 
 export interface UserProps{
   user: UserData;
-  changeName: (name: string) => void;
+  updateUser: (userData: UserData) => void;
+  isAuthenticated: boolean;
+  authenticate: (value: boolean) => void;
 }
