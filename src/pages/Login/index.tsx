@@ -1,7 +1,9 @@
 import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Button, KeyboardAvoidingView, Platform, Text, TextInput, View } from "react-native";
+import DeviceInfo from 'react-native-device-info';
+import TouchID from 'react-native-touch-id';
 import { UserProps } from "../../common/types/user";
 import { AuthContext } from "../../contexts/auth.tsx";
 
@@ -14,7 +16,8 @@ export default function Login() {
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigation = useNavigation<NavigationProp<any>>();
-
+  const [isTouchidEnabled, setIsTouchidEnabled] = useState<boolean>(false);
+  
   useFocusEffect(
     useCallback(() => {
       if (isAuthenticated) {
@@ -22,6 +25,22 @@ export default function Login() {
       }
     }, [isAuthenticated, navigation])
   );
+
+  useEffect(() => {
+    TouchID.isSupported()
+    .then(biometryType => {
+      if (biometryType === 'FaceID') {
+          console.log('FaceID is supported.');
+      } else {
+          console.log('TouchID is supported.');
+      }
+      setIsTouchidEnabled(true);
+    })
+    .catch(error => {
+      setIsTouchidEnabled(false);
+      console.log(error);
+    });
+  }, [])
 
   function handleLogin(){
     if(name !== '' && password !== ''){
@@ -55,6 +74,30 @@ export default function Login() {
     }
   }
 
+  async function handleTouchidLogin() {
+    const configs = {
+      title: "Autenticação biométrica",
+      color: '#FF0000',
+      sensorErrorDexcription: "Falha ao reconhecer a biometria",
+    }
+    if(isTouchidEnabled) {
+      await TouchID.authenticate('to demo this react-native component', configs)
+      .then(async (success: any) => {
+        await DeviceInfo.getDeviceName().then((deviceName) => {
+          updateUser({
+            name: deviceName
+          })
+
+          authenticate(true);
+          navigation.navigate('Home');
+        });
+      })
+      .catch((error: any) => {
+        console.error("Falha na autenticação por biometria: ", error);
+      });
+    }
+  }
+
   return (
     <>
       <Text>Login Page</Text>
@@ -72,6 +115,7 @@ export default function Login() {
 
           <View>
             <Button title="Login com Google" onPress={handleGoogleLogin} />
+            <Button title="Login com biometria" onPress={handleTouchidLogin} />
           </View>
         </View>
       </KeyboardAvoidingView>
