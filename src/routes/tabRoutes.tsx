@@ -1,16 +1,13 @@
 import Icon from '@react-native-vector-icons/fontawesome';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React, { useContext } from "react";
-import { UserProps } from '../common/types/user';
-import { AuthContext } from '../contexts/auth';
+import React from "react";
 import Camera from '../pages/Camera';
+import BasicElements from '../pages/Home';
 import Intermediario from "../pages/Intermediario";
 import Notificacoes from '../pages/Notificacoes';
-import StackRoutes from "./stackRoutes";
 
 export default function TabRoutes() {
   const Tab = createBottomTabNavigator();
-  const { isAuthenticated } = useContext(AuthContext) as UserProps;
   const screenOptions = {
     headerShown: false,
     tabBarHideOnKeyboard: true,
@@ -20,20 +17,15 @@ export default function TabRoutes() {
 
   return(
     <Tab.Navigator
-      screenOptions={isAuthenticated ? {
+      screenOptions={{
         ...screenOptions,
         tabBarStyle: {
           backgroundColor: '#202225',
           borderTopWidth: 0,
         }
-      } : {
-        ...screenOptions,
-        tabBarStyle: {
-          display: 'none',
-        }
       }}
     >
-      <Tab.Screen name="Básico" component={StackRoutes}
+      <Tab.Screen name="Básico" component={BasicElements}
         options={{
           tabBarLabel: "Elementos básicos",
           tabBarIcon: ({color, size}) => <Icon name='home' color={color} size={size} />
