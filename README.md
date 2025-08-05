@@ -37,3 +37,9 @@ pode ser necessário rodar este comando, caso o comando acima dê problema:
 $ cd /android
 $ npx react-native build-android --mode=release
 ```
+
+Para funcionamento do Google Maps, crie uma credencial no <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, com as APIs <strong>Maps SDK for Android</strong> e <strong>Maps ASK for iOS</strong> ativas, e adicione-a no arquivo: ```/android/gradle.properties``` da seguinte maneira:
+
+```console
+GOOGLE_MAPS_API_KEY=SUA_API_KEY
+```
