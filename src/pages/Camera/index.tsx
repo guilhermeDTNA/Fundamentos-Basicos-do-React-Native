@@ -1,8 +1,9 @@
+import Geolocation from '@react-native-community/geolocation';
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CameraOptions, ImageLibraryOptions, launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import MapView from 'react-native-maps';
+import MapView, { Callout, Marker } from 'react-native-maps';
 import { globalStyles } from "../../common/styles/global";
 
 export default function Camera(){
@@ -68,6 +69,23 @@ export default function Camera(){
   ]
 
   const [region, setRegion] = useState<Region>(regions[0]);
+
+  useEffect(() => {
+    async function getPosition(){
+      await Geolocation.getCurrentPosition(async ({
+        coords: {latitude, longitude}
+      }) => {
+        setRegion({name: "Atual", latitude, longitude});
+      }),
+      () => {},
+      {
+        timeout: 2000,
+        maximumAge: 1000
+      }
+    }
+
+    getPosition();
+  }, [])
   
   function changeRegion(name: string){
     const index = regions.findIndex(region => region.name === name);
@@ -112,10 +130,11 @@ export default function Camera(){
             <Text style={styles.mapTitle}>Mapa padrão</Text>
             <MapView
               style={{ width: '100%', height: 400, marginTop: 20 }}
+              showsUserLocation
               region={{
                 ...region,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                latitudeDelta: 0.0121,
+                longitudeDelta: 0.0015,
               }}
               onMapReady={() => {
                 console.log("Mapa standart carregado");
@@ -129,7 +148,15 @@ export default function Camera(){
               }}
               mapType="standard"
               showsTraffic={true}
-            />
+            >
+              <Marker 
+                coordinate={{ latitude: region.latitude, longitude: region.longitude }} 
+                title={region.name}
+                description="Essa é a localização atual da região que você escolheu"
+                pinColor="#00FF00"
+                image={require('../../../assets/images/marker/carro.png')}
+              />
+            </MapView>
           </View>
 
           <View>
@@ -141,14 +168,22 @@ export default function Camera(){
               style={{ width: '100%', height: 400, marginTop: 20 }}
               region={{
                 ...region,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                latitudeDelta: 0.0121,
+                longitudeDelta: 0.0015,
               }}
               onMapReady={() => {
                 console.log("Mapa satélite carregado");
               }}
               mapType="satellite"
-            />
+            >
+              <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
+                <Callout tooltip>
+                  <View style={{backgroundColor: "#FFF", padding: 10, borderRadius: 10}}>
+                    <Text>Callout customizado</Text>
+                  </View>
+                </Callout>
+              </Marker>
+            </MapView>
           </View>
 
           <View>
@@ -164,7 +199,9 @@ export default function Camera(){
                 console.log("Mapa híbrido carregado");
               }}
               mapType="hybrid"
-            />
+            >
+              <Text style={{backgroundColor: "#FF0000", color: "#FFF", fontWeight: 700}}>Marker</Text>
+            </MapView>
           </View>
         </View>
       </ScrollView>
