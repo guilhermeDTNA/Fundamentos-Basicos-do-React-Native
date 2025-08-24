@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Filmes } from "../pages/Filmes";
 import BasicElements from "../pages/Home";
 import { Listas } from "../pages/Listas";
+import RoutesMap from "../pages/Maps/RoutesMap";
 import NavigationOptions from "../pages/Navegacao";
 import TabRoutes from "./tabRoutes";
 
@@ -22,7 +23,9 @@ export default function PrivateRoutes(){
   
     <Stack.Screen key={"APIs"} name="APIs" component={Filmes} />,
     
-    <Stack.Screen key={"Sobre"} name="Sobre" component={NavigationOptions} />
+    <Stack.Screen key={"Sobre"} name="Sobre" component={NavigationOptions} />,
+
+    <Stack.Screen key={"Rotas"} name="Rotas" component={RoutesMap} />
   ];
 
   return(

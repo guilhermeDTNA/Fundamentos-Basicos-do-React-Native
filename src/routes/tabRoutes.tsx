@@ -4,6 +4,7 @@ import React from "react";
 import Camera from '../pages/Camera';
 import BasicElements from '../pages/Home';
 import Intermediario from "../pages/Intermediario";
+import Maps from '../pages/Maps';
 import Notificacoes from '../pages/Notificacoes';
 
 export default function TabRoutes() {
@@ -44,6 +45,11 @@ export default function TabRoutes() {
       <Tab.Screen name="Câmera" component={Camera}
         options={{
           tabBarIcon: ({color, size}) => <Icon name='camera' color={color} size={size} />
+        }}
+      />
+      <Tab.Screen name="Mapas" component={Maps}
+        options={{
+          tabBarIcon: ({color, size}) => <Icon name='map' color={color} size={size} />
         }}
       />
     </Tab.Navigator>

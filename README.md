@@ -43,3 +43,5 @@ Para funcionamento do Google Maps, crie uma credencial no <a href="https://conso
 ```console
 GOOGLE_MAPS_API_KEY=SUA_API_KEY
 ```
+
+Para o funcionamento das rotas do Google Maps, é necessário ativar o serviço <strong>Direction API</strong>, no projeto do Google Cloud Console, e inserir no .env do projeto a API Key do Google Maps, seguindo o arquivo <sstrong>.env.example</strong>.

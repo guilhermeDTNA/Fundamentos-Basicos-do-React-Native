@@ -76,3 +76,5 @@ yarn-error.log
 package-lock.json
 android/keystore.properties
 android/gradle.properties
+
+.env
