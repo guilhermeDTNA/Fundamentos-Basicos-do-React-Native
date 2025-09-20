@@ -7,53 +7,56 @@ import MapView, { Callout, Marker } from 'react-native-maps';
 import { globalStyles } from "../../common/styles/global";
 
 export interface RegionProps{
-    name?: string;
-    latitude: number;
-    longitude: number;
-    latitudeDelta: number;
-    longitudeDelta: number;
+  name?: string;
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
+export const regions: RegionProps[] = [
+  {
+    name: "Diamantina",
+    latitude: -18.2339566,
+    longitude: -43.6087307,
+    latitudeDelta: 0.0121,
+    longitudeDelta: 0.0015
+  },
+  {
+    name: "Curvelo",
+    latitude: -18.8062759,
+    longitude: -44.4130455,
+    latitudeDelta: 0.0121,
+    longitudeDelta: 0.0015
+  },
+  {
+    name: "Formiga",
+    latitude: -20.0664842,
+    longitude: -50.0532568,
+    latitudeDelta: 0.0121,
+    longitudeDelta: 0.0015
   }
+]
 
 export default function Maps(){
-  const regions: RegionProps[] = [
-    {
-      name: "Diamantina",
-      latitude: -18.2339566,
-      longitude: -43.6087307,
-      latitudeDelta: 0.0121,
-      longitudeDelta: 0.0015
-    },
-    {
-      name: "Curvelo",
-      latitude: -18.8062759,
-      longitude: -44.4130455,
-      latitudeDelta: 0.0121,
-      longitudeDelta: 0.0015
-    },
-    {
-      name: "Formiga",
-      latitude: -20.0664842,
-      longitude: -50.0532568,
-      latitudeDelta: 0.0121,
-      longitudeDelta: 0.0015
-    }
-  ]
-
   const [region, setRegion] = useState<RegionProps>(regions[0]);
   const navigation = useNavigation<NavigationProp<any>>();
 
   useEffect(() => {
-    async function getPosition(){
-      await Geolocation.getCurrentPosition(async ({
-        coords: {latitude, longitude}
-      }) => {
-        setRegion({...region, name: "Atual", latitude, longitude});
-      }),
-      () => {},
-      {
-        timeout: 2000,
-        maximumAge: 1000
-      }
+    function getPosition(){
+      Geolocation.getCurrentPosition(
+        ({coords: {latitude, longitude}}) => {
+          setRegion({...region, name: "Atual", latitude, longitude});
+        },
+        (error) => {
+          console.log('Erro ao obter localização:', error);
+        },
+        {
+          timeout: 2000,
+          enableHighAccuracy: true,
+          maximumAge: 1000
+        }
+      );
     }
 
     getPosition();
